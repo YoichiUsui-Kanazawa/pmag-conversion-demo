@@ -1,0 +1,160 @@
+:root {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --line: #d5dae0;
+  --text: #1d232a;
+  --muted: #5d6773;
+  --accent: #1f77b4;
+  --accent-soft: #e4f0f9;
+  --bad: #c0392b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 system-ui, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "inputs stage"
+    "inputs results";
+  gap: 12px;
+  height: 100vh;
+  padding: 12px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+h2 { margin: 0 0 8px; font-size: 15px; }
+h3 { margin: 14px 0 6px; font-size: 14px; }
+h3:first-child { margin-top: 0; }
+h3 small { font-weight: normal; color: var(--muted); }
+
+/* ---- 3D 表示 ---- */
+#stage {
+  grid-area: stage;
+  position: relative;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(#ffffff, #eef1f4);
+  overflow: hidden;
+}
+#view { display: block; width: 100%; height: 100%; }
+
+.seg {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+}
+.seg button {
+  flex: 1;
+  min-height: 40px;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+.seg button:first-child { border-radius: 6px 0 0 6px; }
+.seg button:last-child { border-radius: 0 6px 6px 0; }
+.seg button + button { margin-left: -1px; }
+.seg button[aria-pressed="true"] {
+  position: relative;
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.legend {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  margin: 0;
+  padding: 4px 8px;
+  list-style: none;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+}
+.legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+
+/* ---- 結果 ---- */
+#results table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+#results th, #results td { padding: 4px 6px; text-align: right; border-bottom: 1px solid var(--line); }
+#results th:first-child, #results td:first-child { text-align: left; white-space: nowrap; }
+#results th { font-size: 12px; font-weight: 600; color: var(--muted); }
+#results tr.current td { background: var(--accent-soft); font-weight: 600; }
+.note { margin: 8px 0 0; font-size: 12px; color: var(--muted); }
+
+/* ---- 入力 ---- */
+#inputs { grid-area: inputs; overflow-y: auto; }
+#results { grid-area: results; }
+
+.field {
+  display: grid;
+  grid-template-columns: 3.4em 1fr 6.2em;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.field label { font-size: 14px; }
+.field input[type="range"] { width: 100%; min-height: 32px; accent-color: var(--accent); }
+.field .num { display: flex; align-items: center; gap: 2px; }
+.field input[type="number"] {
+  width: 100%;
+  min-height: 36px;
+  padding: 2px 6px;
+  font: inherit;
+  text-align: right;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.field input[type="number"]:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.field input[type="number"].invalid { border-color: var(--bad); }
+
+/* ---- スマホ（縦長）: 3D 表示を上に固定し、スクロールしながら入力できるようにする ---- */
+@media (max-width: 800px) {
+  #app {
+    display: block;
+    height: auto;
+    padding: 8px;
+  }
+  #stage {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: 46vh;
+    min-height: 280px;
+    margin-bottom: 8px;
+  }
+  #results { margin-bottom: 8px; padding: 10px; }
+  #results th, #results td { padding: 4px 3px; font-size: 13px; }
+  #inputs { overflow: visible; }
+  .legend { font-size: 11px; }
+  .seg button { font-size: 13px; }
+}
