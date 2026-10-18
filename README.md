@@ -14,13 +14,14 @@
     main.js – 起動処理（入力 → scene.setParams → 結果表示）
     vendor/ – 同梱した three.js (r170, MIT)
   scripts/serve.mjs – 開発用の簡易サーバー
+  start.bat – Windows 用の起動ショートカット（サーバー起動 + ブラウザを開く）
   tests/ – Unit tests (Node.js built-in test runner)
   docs/ – All documentation (座標系の図、UI 案など)
 ```
 
 ## 動かし方
 
-ES モジュールを使うため `index.html` を直接開く（file://）ことはできません。簡易サーバーを起動してください。
+ES モジュールを使うため `index.html` を直接開く（file://）ことはできません（開いても入力欄や 3D 表示が出ません）。簡易サーバーを起動してください。Windows では `start.bat` をダブルクリックすると、サーバー起動とブラウザ表示が一度にできます（Node.js が必要）。
 
 ```bash
 node scripts/serve.mjs
