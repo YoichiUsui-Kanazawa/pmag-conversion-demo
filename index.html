@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>古地磁気 座標変換デモ</title>
+<link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+<div id="app">
+  <section id="stage" aria-label="3D表示">
+    <canvas id="view"></canvas>
+    <div class="seg" id="views" role="group" aria-label="視点の切り替え">
+      <button type="button" data-view="geo">地理座標</button>
+      <button type="button" data-view="block">ブロック試料座標</button>
+      <button type="button" data-view="spec">試片座標</button>
+    </div>
+    <ul class="legend" aria-label="凡例">
+      <li><i style="background:#c9ced4"></i>平板（地理座標の水平面）</li>
+      <li><i style="background:#5b8fb0"></i>ブロック試料</li>
+      <li><i style="background:#b03040"></i>試片</li>
+      <li><i style="background:#ff8c1a"></i>古地磁気方位</li>
+    </ul>
+  </section>
+
+  <section id="results" class="panel" aria-live="polite">
+    <h2>変換結果</h2>
+    <table>
+      <thead>
+        <tr><th>座標系</th><th>偏角 D</th><th>伏角 I</th><th>x</th><th>y</th><th>z</th></tr>
+      </thead>
+      <tbody id="result-rows"></tbody>
+    </table>
+    <p class="note">x, y, z は方向の単位ベクトル。伏角が ±90° のとき偏角は定まりません（—）。<br>
+      3D 表示は横ドラッグで、選択中の Z 軸まわりに回せます（ダブルクリック／ダブルタップでリセット）。</p>
+  </section>
+
+  <section id="inputs" class="panel" aria-label="入力"></section>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
